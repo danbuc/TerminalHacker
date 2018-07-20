@@ -8,6 +8,18 @@ public class Hacker : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        ShowMainMenu();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    void ShowMainMenu()
+    {
+        Terminal.ClearScreen();
         Terminal.WriteLine("Welcome to the Matrix.");
         Terminal.WriteLine("We need to increase our resources.");
         Terminal.WriteLine("What is our next mission?");
@@ -17,11 +29,5 @@ public class Hacker : MonoBehaviour
         Terminal.WriteLine("Press 3: Transport supplies");
         Terminal.WriteLine("");
         Terminal.WriteLine("Your choice: ");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
