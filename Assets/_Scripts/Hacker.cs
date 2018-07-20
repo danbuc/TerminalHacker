@@ -10,6 +10,12 @@ public class Hacker : MonoBehaviour
     enum Screen { MainMenu, Password, Win };
     Screen currentScreen;
 
+    string password;
+
+    string[] level1Passwords = { "banana", "pineapple", "hamburger", "salad", "sausages" };
+    string[] level2Passwords = { "aspirin", "firstaidkit", "hospitalclothes", "medicalgauntlet", "painkiller" };
+    string[] level3Passwords = { "fastcar", "largetruck", "superlongtrain", "flyingairplane", "superflyinghelicopter" };
+
     // Use this for initialization
     void Start()
     {
@@ -41,28 +47,20 @@ public class Hacker : MonoBehaviour
         {
             RunMainMenu(input);
         }
+        else if (currentScreen == Screen.Password)
+        {
+            CheckPassword(input);
+        }
 
     }
 
     void RunMainMenu(string input)
     {
-        if (input == "1")
-        {
-            level = 1;
-            Terminal.WriteLine("You choose mission " + level);
-            StartGame();
+        bool isValidLevelNumber = (input == "1" || input == "2" || input == "3");
 
-        }
-        else if (input == "2")
+        if (isValidLevelNumber)
         {
-            level = 2;
-            Terminal.WriteLine("You choose mission " + level);
-            StartGame();
-        }
-        else if (input == "3")
-        {
-            level = 3;
-            Terminal.WriteLine("You choose mission " + level);
+            level = int.Parse(input);
             StartGame();
         }
         else
@@ -74,7 +72,36 @@ public class Hacker : MonoBehaviour
     void StartGame()
     {
         currentScreen = Screen.Password;
-        Terminal.WriteLine("Welcome to mission " + level);
+        Terminal.ClearScreen();
         Terminal.WriteLine("Enter your password:");
+
+        switch (level)
+        {
+            case 1:
+                password = level1Passwords[0];
+                break;
+            case 2:
+                password = level2Passwords[0];
+                break;
+            case 3:
+                password = level3Passwords[0];
+                break;
+            default:
+                Debug.LogWarning("Invalid Level");
+                break;
+        }
+    }
+
+    void CheckPassword(string input)
+    {
+        if (input == password)
+        {
+            Terminal.WriteLine("Supplies accessed!");
+        }
+        else
+        {
+            Terminal.WriteLine("WRONG PASSWORD!");
+            Terminal.WriteLine("Enter your password:");
+        }
     }
 }
