@@ -11,6 +11,7 @@ public class Hacker : MonoBehaviour
     Screen currentScreen;
 
     string password;
+    const string goToMenuHint = "You can type 'menu' at any time to choose a different mission.";
 
     string[] level1Passwords = { "banana", "pineapple", "hamburger", "salad", "sausages" };
     string[] level2Passwords = { "aspirin", "firstaidkit", "hospitalclothes", "medicalgauntlet", "painkiller" };
@@ -61,30 +62,38 @@ public class Hacker : MonoBehaviour
         if (isValidLevelNumber)
         {
             level = int.Parse(input);
-            StartGame();
+            AskForPassword();
         }
         else
         {
             Terminal.WriteLine("Choose a valid mission.");
+            Terminal.WriteLine(goToMenuHint);
         }
     }
 
-    void StartGame()
+    void AskForPassword()
     {
         currentScreen = Screen.Password;
         Terminal.ClearScreen();
+        SetRandomPassword();
         Terminal.WriteLine("Enter your password:");
+        Terminal.WriteLine("Hint: " + password.Anagram());
 
+
+    }
+
+    void SetRandomPassword()
+    {
         switch (level)
         {
             case 1:
-                password = level1Passwords[0];
+                password = level1Passwords[Random.Range(0, 4)];
                 break;
             case 2:
-                password = level2Passwords[0];
+                password = level2Passwords[Random.Range(0, 4)];
                 break;
             case 3:
-                password = level3Passwords[0];
+                password = level3Passwords[Random.Range(0, 4)];
                 break;
             default:
                 Debug.LogWarning("Invalid Level");
@@ -96,12 +105,57 @@ public class Hacker : MonoBehaviour
     {
         if (input == password)
         {
-            Terminal.WriteLine("Supplies accessed!");
+            ShowWinScreen();
         }
         else
         {
-            Terminal.WriteLine("WRONG PASSWORD!");
-            Terminal.WriteLine("Enter your password:");
+            AskForPassword();
         }
     }
+
+    void ShowWinScreen()
+    {
+        currentScreen = Screen.Win;
+        Terminal.ClearScreen();
+        ShowLevelReward();
+        Terminal.WriteLine(goToMenuHint);
+    }
+
+    void ShowLevelReward()
+    {
+        switch (level)
+        {
+            case 1:
+                Terminal.WriteLine("Let's eat!");
+                Terminal.WriteLine(@"
+      _ __,~~~/
+,~~`( )_( )-\|
+    |/|  `--.
+    ! !  !
+                ");
+                break;
+            case 2:
+                Terminal.WriteLine("We restored our health!");
+                Terminal.WriteLine(@"
+      _ __,~~~/
+,~~`( )_( )-\|
+    |/|  `--.
+    ! !  !
+                ");
+                break;
+            case 3:
+                Terminal.WriteLine("Time to travel!");
+                Terminal.WriteLine(@"
+      _ __,~~~/
+,~~`( )_( )-\|
+    |/|  `--.
+    ! !  !
+                ");
+                break;
+            default:
+                Debug.LogWarning("What happend?");
+                break;
+        }
+    }
+
 }
