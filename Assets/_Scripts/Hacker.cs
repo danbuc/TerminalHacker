@@ -44,6 +44,11 @@ public class Hacker : MonoBehaviour
         {
             ShowMainMenu(welcome + " Again!");
         }
+        else if (input == "quit" || input == "exit" || input == "close")
+        {
+            Terminal.WriteLine("Shutting down...");
+            Application.Quit();
+        }
         else if (currentScreen == Screen.MainMenu)
         {
             RunMainMenu(input);
@@ -87,13 +92,13 @@ public class Hacker : MonoBehaviour
         switch (level)
         {
             case 1:
-                password = level1Passwords[Random.Range(0, 4)];
+                password = level1Passwords[Random.Range(0, level1Passwords.Length)];
                 break;
             case 2:
-                password = level2Passwords[Random.Range(0, 4)];
+                password = level2Passwords[Random.Range(0, level2Passwords.Length)];
                 break;
             case 3:
-                password = level3Passwords[Random.Range(0, 4)];
+                password = level3Passwords[Random.Range(0, level3Passwords.Length)];
                 break;
             default:
                 Debug.LogWarning("Invalid Level");
