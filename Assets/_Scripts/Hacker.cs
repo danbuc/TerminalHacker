@@ -5,6 +5,11 @@ using UnityEngine;
 public class Hacker : MonoBehaviour
 {
     string welcome = "Welcome, Hacker-b0Y!";
+    int level;
+
+    enum Screen { MainMenu, Password, Win };
+    Screen currentScreen;
+
     // Use this for initialization
     void Start()
     {
@@ -13,6 +18,7 @@ public class Hacker : MonoBehaviour
 
     void ShowMainMenu(string welcomeMessage)
     {
+        currentScreen = Screen.MainMenu;
         Terminal.ClearScreen();
         Terminal.WriteLine(welcomeMessage);
         Terminal.WriteLine("We need to increase our resources.");
@@ -27,26 +33,48 @@ public class Hacker : MonoBehaviour
 
     void OnUserInput(string input)
     {
+        if (input == "menu")
+        {
+            ShowMainMenu(welcome + " Again!");
+        }
+        else if (currentScreen == Screen.MainMenu)
+        {
+            RunMainMenu(input);
+        }
 
+    }
+
+    void RunMainMenu(string input)
+    {
         if (input == "1")
         {
-            Terminal.WriteLine("You choose mission 1.");
+            level = 1;
+            Terminal.WriteLine("You choose mission " + level);
+            StartGame();
+
         }
         else if (input == "2")
         {
-            Terminal.WriteLine("You choose mission 2.");
+            level = 2;
+            Terminal.WriteLine("You choose mission " + level);
+            StartGame();
         }
         else if (input == "3")
         {
-            Terminal.WriteLine("You choose mission 3.");
-        }
-        else if (input == "menu")
-        {
-            ShowMainMenu(welcome + " Again!");
+            level = 3;
+            Terminal.WriteLine("You choose mission " + level);
+            StartGame();
         }
         else
         {
             Terminal.WriteLine("Choose a valid mission.");
         }
+    }
+
+    void StartGame()
+    {
+        currentScreen = Screen.Password;
+        Terminal.WriteLine("Welcome to mission " + level);
+        Terminal.WriteLine("Enter your password:");
     }
 }
